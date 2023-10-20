@@ -2,13 +2,11 @@
 import React, { useState } from 'react'
 import { auth } from '../../config/firebase'
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth'
+import Button from '@mui/material/Button'
 
 const PhoneAuth: React.FC = () => {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [verificationCode, setVerificationCode] = useState('')
-    // const [confirmationResult, setConfirmationResult] = useState<any | null>(
-    //     null
-    // )
 
     const generateRecaptcha = () => {
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha', {
@@ -82,7 +80,10 @@ const PhoneAuth: React.FC = () => {
                 value={phoneNumber}
                 onChange={handlePhoneNumberChange}
             />
-            <button onClick={handleSendCode}>Send Verification Code</button>
+            <Button onClick={handleSendCode} variant={'contained'}>
+                Send Verification code
+            </Button>
+            {/* <button onClick={handleSendCode}>Send Verification Code</button> */}
             <input
                 type="text"
                 placeholder="Verification Code"
