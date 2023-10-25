@@ -3,6 +3,28 @@ import React, { useState } from 'react'
 import { auth } from '../../config/firebase'
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth'
 import Button from '@mui/material/Button'
+import { addProfile } from '../../api'
+
+const data: IProfile = {
+    displayName: 'test1',
+    fullName: 'test1',
+    phoneNumber: 'test1',
+    email: 'test1',
+    userRoles: ['test1'],
+    verifiedAccount: false,
+    linkedAccounts: ['yes'],
+}
+
+const handleAddProfile = (): void => {
+    addProfile(data)
+        .then(({ status, data }) => {
+            if (status !== 201) {
+                throw new Error('Error! Todo not saved')
+            }
+            console.log('YES', data)
+        })
+        .catch((err) => console.log(err))
+}
 
 const PhoneAuth: React.FC = () => {
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -91,6 +113,7 @@ const PhoneAuth: React.FC = () => {
                 onChange={handleVerificationCodeChange}
             />
             <button onClick={confirmVerificationCode}>Verify Code</button>
+            <button onClick={handleAddProfile}>TEST PROFILE ADD PLS</button>
         </div>
     )
 }

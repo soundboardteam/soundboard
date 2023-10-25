@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const todoSchema = new mongoose_1.Schema({
-    name: {
+const bioSchema = new mongoose_1.Schema({
+    roleId: {
         type: String,
+        required: true,
+    },
+    socials: {
+        type: Array,
         required: true,
     },
     description: {
         type: String,
         required: true,
     },
-    status: {
-        type: Boolean,
-        required: true,
-    },
-}, { timestamps: true });
-exports.default = (0, mongoose_1.model)('Todo', todoSchema);
+});
+exports.default = (0, mongoose_1.model)('Bio', bioSchema);
