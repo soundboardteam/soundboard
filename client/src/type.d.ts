@@ -29,6 +29,12 @@ declare global {
         todo?: IProfile
     }
 
+    type ApiProfileType = {
+        message: string
+        status: string
+        profile: IProfile
+    }
+
     interface IProfile {
         displayName: string
         fullName: string

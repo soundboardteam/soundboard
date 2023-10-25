@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addProfile = exports.getProfiles = void 0;
+exports.getProfile = exports.addProfile = exports.getProfiles = void 0;
 const profile_1 = __importDefault(require("../../models/profile"));
 const getProfiles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -24,6 +24,21 @@ const getProfiles = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getProfiles = getProfiles;
+const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { params: { phoneNumber }, body, } = req;
+        const reqPhoneNumber = req.params.phoneNumber;
+        console.log('REQ PHONE', reqPhoneNumber);
+        const profile = yield profile_1.default.find({ phoneNumber: reqPhoneNumber });
+        console.log('CHECK THIS', profile);
+        res.status(200).json({ profile });
+    }
+    catch (error) {
+        console.log('CHECK ERROR');
+        res.status(500).json({ error: 'Cannot find profile' });
+    }
+});
+exports.getProfile = getProfile;
 const addProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('REQUEST BODY', req.body);
     try {

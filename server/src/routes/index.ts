@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../controllers/todos'
-import { addProfile, getProfiles } from '../controllers/profile'
+import { addProfile, getProfile, getProfiles } from '../controllers/profile'
 
 const router: Router = Router()
 
@@ -15,5 +15,7 @@ router.delete('/delete-todo/:id', deleteTodo)
 router.get('/profiles', getProfiles)
 
 router.post('/add-profile', addProfile)
+
+router.get('/get-profile/:phoneNumber', getProfile)
 
 export default router

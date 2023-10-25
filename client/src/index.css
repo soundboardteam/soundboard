@@ -9,8 +9,7 @@ body {
     font-family: 'Nunito', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #fff;
-    background: #333;
+    color: slategray;
 }
 
 .App {
@@ -27,7 +26,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #444;
     padding: 0.5rem 1rem;
     border-bottom: 1px solid #333333;
 }
@@ -97,4 +95,14 @@ body {
 
 .hide-button {
     display: none;
+}
+
+.auth-container {
+    display: flex;
+    background-color: slategrey;
+    flex-direction: column;
+}
+
+.auth-input {
+    margin: 30px;
 }

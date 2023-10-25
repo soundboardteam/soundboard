@@ -35,3 +35,16 @@ export const addProfile = async (
         throw error
     }
 }
+
+export const verifyProfile = async (
+    phoneNumber: string
+): Promise<AxiosResponse<ApiProfileType>> => {
+    try {
+        const profile: AxiosResponse<ApiProfileType> = await axios.get(
+            baseUrl + '/get-profile/' + phoneNumber
+        )
+        return profile
+    } catch (error) {
+        throw error
+    }
+}

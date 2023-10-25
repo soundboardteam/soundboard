@@ -10,4 +10,5 @@ router.put('/edit-todo/:id', todos_1.updateTodo);
 router.delete('/delete-todo/:id', todos_1.deleteTodo);
 router.get('/profiles', profile_1.getProfiles);
 router.post('/add-profile', profile_1.addProfile);
+router.get('/get-profile/:phoneNumber', profile_1.getProfile);
 exports.default = router;

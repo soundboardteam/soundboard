@@ -11,6 +11,26 @@ const getProfiles = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
+const getProfile = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const {
+            params: { phoneNumber },
+            body,
+        } = req
+
+        const reqPhoneNumber = req.params.phoneNumber
+        console.log('REQ PHONE', reqPhoneNumber)
+
+        const profile = await Profile.find({ phoneNumber: reqPhoneNumber })
+        console.log('CHECK THIS', profile)
+        res.status(200).json({ profile })
+    } catch (error) {
+        console.log('CHECK ERROR')
+
+        res.status(500).json({ error: 'Cannot find profile' })
+    }
+}
+
 const addProfile = async (req: Request, res: Response): Promise<void> => {
     console.log('REQUEST BODY', req.body)
     try {
@@ -48,4 +68,4 @@ const addProfile = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-export { getProfiles, addProfile }
+export { getProfiles, addProfile, getProfile }
