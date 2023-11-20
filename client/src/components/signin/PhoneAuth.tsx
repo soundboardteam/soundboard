@@ -1,5 +1,5 @@
 // Import necessary Firebase modules at the top of your file
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { auth } from '../../config/firebase'
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth'
 import Button from '@mui/material/Button'
@@ -38,11 +38,22 @@ const PhoneAuth: React.FC = () => {
     const [isUserNotSignedUp, setIsUserNotSignedUp] = useState(false)
     const [profile, setProfile] = useState<IProfile>()
     const [isUserSignedIn, setIsUserSignedIn] = useState(false)
-
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
+    const [token, setToken] = useState('')
+    const [authentication, setAuthentication] = useState(false)
 
+    useEffect(() => {
+        if (auth.currentUser) {
+            setAuthentication(true)
+            auth.currentUser.getIdToken().then((token) => {
+                setToken(token)
+            })
+        }
+    })
+    console.log(token)
+    console.log(authentication)
     const handlePhoneNumberChange = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
