@@ -1,34 +1,14 @@
 import { Response, Request } from 'express'
-import { IProfile } from './../../types/user'
+import { IClient } from './../../types/user'
+import Client from '../../models/client'
 import Profile from '../../models/profile'
 
-const getProfiles = async (req: Request, res: Response): Promise<void> => {
+const getClients = async (req: Request, res: Response): Promise<void> => {
     try {
-        const profiles: IProfile[] = await Profile.find()
-        res.status(200).json({ profiles })
+        const clients: IClient[] = await Client.find()
+        res.status(200).json({ clients })
     } catch (error) {
         throw error
-    }
-}
-
-const getProfile = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const {
-            params: { phoneNumber },
-            body,
-        } = req
-
-        const reqPhoneNumber = req.params.phoneNumber
-        console.log('REQ PHONE', reqPhoneNumber)
-
-        const profile = await Profile.find({ phoneNumber: reqPhoneNumber })
-        console.log('CHECK THIS', profile)
-        res.status(200).json({ profile })
-        console.log(req.headers)
-    } catch (error) {
-        console.log('CHECK ERROR')
-
-        res.status(500).json({ error: 'Cannot find profile' })
     }
 }
 
@@ -36,7 +16,7 @@ const addProfile = async (req: Request, res: Response): Promise<void> => {
     console.log('REQUEST BODY', req.body)
     try {
         const body = req.body as Pick<
-            IProfile,
+            IClient,
             | 'displayName'
             | 'fullName'
             | 'phoneNumber'

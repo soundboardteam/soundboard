@@ -1,17 +1,18 @@
 import { Response, Request } from 'express'
-import { IProfile } from './../../types/user'
-import Profile from '../../models/profile'
+import { IFreelancer } from './../../types/user'
+import Freelander from '../../models/freelancer'
+import { getProfile } from '../profile'
 
-const getProfiles = async (req: Request, res: Response): Promise<void> => {
+const getFreelancers = async (req: Request, res: Response): Promise<void> => {
     try {
-        const profiles: IProfile[] = await Profile.find()
+        const freelancer: IFreelancer[] = await Profile.find()
         res.status(200).json({ profiles })
     } catch (error) {
         throw error
     }
 }
 
-const getProfile = async (req: Request, res: Response): Promise<void> => {
+const getFreelancer = async (req: Request, res: Response): Promise<void> => {
     try {
         const {
             params: { phoneNumber },
@@ -32,22 +33,16 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-const addProfile = async (req: Request, res: Response): Promise<void> => {
+const addFreelancer = async (req: Request, res: Response): Promise<void> => {
     console.log('REQUEST BODY', req.body)
     try {
         const body = req.body as Pick<
-            IProfile,
-            | 'displayName'
-            | 'fullName'
-            | 'phoneNumber'
-            | 'email'
-            | 'userRoles'
-            | 'verifiedAccount'
-            | 'linkedAccounts'
+            IFreelancer,
+            'profileId' | 'ratings' | 'bio' | 'jobs' | 'previousClients'
         >
 
-        const profile: IProfile = new Profile({
-            displayName: body.displayName,
+        const freelancer: IFreelancer = new Freelancer({
+            profileId: body.displayName,
             fullName: body.fullName,
             phoneNumber: body.phoneNumber,
             email: body.email,
@@ -56,13 +51,13 @@ const addProfile = async (req: Request, res: Response): Promise<void> => {
             linkedAccounts: body.linkedAccounts,
         })
 
-        const newProfile: IProfile = await profile.save()
-        const allProfiles: IProfile[] = await Profile.find()
+        const newFreelancer: IFreelancer = await freelancer.save()
+        const allFreelancers: IFreelancer[] = await Freelancer.find()
 
         res.status(201).json({
-            message: 'Profile added',
-            profile: newProfile,
-            profiles: allProfiles,
+            message: 'Freelancer added',
+            freelancer: newFreelancer,
+            freelancers: allFreelancers,
         })
     } catch (error) {
         throw error
