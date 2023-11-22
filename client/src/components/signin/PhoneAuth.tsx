@@ -1,4 +1,3 @@
-// Import necessary Firebase modules at the top of your file
 import React, { useState } from 'react'
 import { auth } from '../../config/firebase'
 import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth'
@@ -152,7 +151,7 @@ const PhoneAuth: React.FC = () => {
                         label="Enter email"
                         value={email}
                         onChange={handleEmailChange}
-                        placeholder="Enter phone number (+1)"
+                        placeholder="Enter email"
                     ></TextField>
                 </div>
 
@@ -162,7 +161,7 @@ const PhoneAuth: React.FC = () => {
                         onClick={handleAddProfile}
                         variant={'contained'}
                     >
-                        Verify OTP
+                        Create Account
                     </Button>
                 </div>
             </>
@@ -170,10 +169,8 @@ const PhoneAuth: React.FC = () => {
     }
 
     const renderProfile = () => {
-        return <h1>"Welcome, + {profile?.phoneNumber}</h1>
+        return <h1>Welcome, {profile?.fullName}</h1>
     }
-
-    console.log(isVerifiedNumber, isUserNotSignedUp, profile)
 
     const generateRecaptcha = () => {
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha', {
@@ -188,7 +185,7 @@ const PhoneAuth: React.FC = () => {
 
     const handleAddProfile = (): void => {
         const data: IProfile = {
-            displayName: 'test1',
+            displayName: '',
             fullName: firstName + ' ' + lastName,
             phoneNumber: phoneNumber,
             email: email,
@@ -202,7 +199,11 @@ const PhoneAuth: React.FC = () => {
                 if (status !== 201) {
                     throw new Error('Error! Todo not saved')
                 }
-                console.log('YES', data)
+                return data
+            })
+            .then((data) => {
+                setProfile(data.profile)
+                setIsUserSignedIn(true)
             })
             .catch((err) => console.log(err))
     }
@@ -210,10 +211,13 @@ const PhoneAuth: React.FC = () => {
     const handleVerifyPhoneNumber = async () => {
         verifyProfile(phoneNumber).then(({ status, data }) => {
             if (status === 200) {
-                sendCode()
-                console.log('PROF', data.profile)
-                setIsVerifiedNumber(true)
-                setProfile(data.profile)
+                if (data.profile) {
+                    sendCode()
+                    setIsVerifiedNumber(true)
+                    setProfile(data.profile)
+                } else {
+                    setIsUserNotSignedUp(true)
+                }
             } else {
                 console.log('ERR')
                 setIsUserNotSignedUp(true)
@@ -229,7 +233,6 @@ const PhoneAuth: React.FC = () => {
                 .then((confirmationResult) => {
                     // SMS sent. Prompt user to type the code from the message, then sign the
                     // user in with confirmationResult.confirm(code).
-                    console.log(confirmationResult)
                     window.confirmationResult = confirmationResult
                 })
                 .catch((error) => {

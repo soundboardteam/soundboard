@@ -15,18 +15,24 @@ const baseUrl: string = 'http://localhost:4000'
 
 export const addProfile = async (
     formData: IProfile
-): Promise<AxiosResponse<ApiDataType>> => {
+): Promise<AxiosResponse<ApiProfileType>> => {
     try {
         const profile: Omit<IProfile, '_id'> = {
-            displayName: formData.displayName,
+            displayName: formData.displayName
+                ? formData.displayName
+                : 'Test Candidate',
             fullName: formData.fullName,
             phoneNumber: formData.phoneNumber,
             email: formData.email,
-            userRoles: formData.userRoles,
-            verifiedAccount: formData.verifiedAccount,
-            linkedAccounts: formData.linkedAccounts,
+            userRoles: formData.userRoles ? formData.userRoles : [],
+            verifiedAccount: formData.verifiedAccount
+                ? formData.verifiedAccount
+                : false,
+            linkedAccounts: formData.linkedAccounts
+                ? formData.linkedAccounts
+                : [],
         }
-        const saveProfile: AxiosResponse<ApiDataType> = await axios.post(
+        const saveProfile: AxiosResponse<ApiProfileType> = await axios.post(
             baseUrl + '/add-profile',
             profile
         )
@@ -43,6 +49,7 @@ export const verifyProfile = async (
         const profile: AxiosResponse<ApiProfileType> = await axios.get(
             baseUrl + '/get-profile/' + phoneNumber
         )
+        console.log('ARE WE VERIFIYING', profile)
         return profile
     } catch (error) {
         throw error
