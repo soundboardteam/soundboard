@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, ToggleButton, useTheme } from '@mui/material'
+import { ToggleButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { authContainer } from '../signin/styles'
 import CSS from 'csstype'
-import { useBgColor, useColor, useSxColor, useTextColor } from '../../App'
-import GradientButton from '../core-components/GradientButton'
+import { useBgColor, useSxColor, useTextColor } from '../../App'
+import GradientButton from '../core/GradientButton'
 
 interface HomeProps {
     toggleTheme: () => void
