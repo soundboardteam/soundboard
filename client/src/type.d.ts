@@ -44,4 +44,13 @@ declare global {
         verifiedAccount: boolean
         linkedAccounts: string[]
     }
+
+    interface AuthContextType {
+        user: IProfile | null
+        isAuthenticated: boolean
+        token: string | null
+        login: (emailOrPhoneNumber: string, password: string) => Promise<void>
+        verifyCode: (code: string, confirmationResult: any) => Promise<void>
+        logout: () => Promise<void>
+    }
 }
