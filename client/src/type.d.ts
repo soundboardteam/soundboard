@@ -30,8 +30,6 @@ declare global {
     }
 
     type ApiProfileType = {
-        message: string
-        status: string
         profile: IProfile
     }
 

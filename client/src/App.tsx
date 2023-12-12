@@ -6,14 +6,14 @@ import {
     useTheme,
 } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
-import { useRoutes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Home from './components/home/Home'
 import { Login } from './components/signin/Login'
 import PrivateRoute from './components/PrivateRoute'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { SignUp } from './components/signin/SignUp'
-import { CssBaseline, ToggleButton } from '@mui/material'
+import { CssBaseline } from '@mui/material'
+import { VerifyPrompt } from './components/signin/VerifyPrompt'
 
 declare module '@mui/material/styles' {
     interface Palette {

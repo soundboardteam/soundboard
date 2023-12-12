@@ -19,7 +19,7 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
         if (profile.length === 0) {
             res.status(201).json({})
         }
-        res.status(200).json(undefined)
+        res.status(200).json(profile[0])
     } catch (error) {
         res.status(500).json({ error: 'Cannot find profile' })
     }

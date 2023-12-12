@@ -44,12 +44,11 @@ export const addProfile = async (
 
 export const verifyProfile = async (
     phoneNumber: string
-): Promise<AxiosResponse<ApiProfileType>> => {
+): Promise<AxiosResponse<IProfile>> => {
     try {
-        const profile: AxiosResponse<ApiProfileType> = await axios.get(
+        const profile: AxiosResponse<IProfile> = await axios.get(
             baseUrl + '/get-profile/' + phoneNumber
         )
-        console.log('ARE WE VERIFIYING', profile)
         return profile
     } catch (error) {
         throw error
