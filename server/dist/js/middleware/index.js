@@ -15,11 +15,12 @@ class Middleware {
             const token = req.headers.authorization.split(' ')[1];
             try {
                 const decodeValue = yield admin.auth().verifyIdToken(token);
+                console.log(decodeValue);
                 if (decodeValue) {
                     req.user = decodeValue;
                     return next();
                 }
-                return res.json({ message: 'Un authorize' });
+                return res.json({ message: 'Unauthorized' });
             }
             catch (e) {
                 return res.json({ message: 'Internal Error' });
